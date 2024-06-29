@@ -5,11 +5,14 @@
 package br.com.infrastructure.service;
 import br.com.tarefas.model.Tarefas;
 import br.com.tarefas.service.IServiceTarefas;
+import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Controller
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/tarefas")
 public class Facade implements IFacade {
     @Autowired
@@ -41,17 +45,12 @@ public class Facade implements IFacade {
     
     @Override
     @DeleteMapping("/{id}")
-    public void deleteTarefas(Tarefas tarefas){
+    public void deleteTarefas(@PathVariable Tarefas tarefas){
         serviceTarefas.deleteTarefas(tarefas);
-    }
-        
-    @Override
-    public List<Tarefas> findByTituloTarefasLike(String titulo) {
-       return  serviceTarefas.findByTituloTarefasLike(titulo);
-    }
+    }      
     
     @Override
-    public List<Tarefas> findByTituloTarefas(String titulo) {
+    public List<Tarefas> findByTituloTarefas(@RequestBody String titulo) {
        return  serviceTarefas.findByTituloTarefas(titulo);
     }
 
@@ -63,7 +62,23 @@ public class Facade implements IFacade {
     }
     
     @Override
-    public Tarefas findByIdTarefas(Long id){
+    @GetMapping
+    public Tarefas findByIdTarefas(@RequestBody Long id){
         return serviceTarefas.findById(id);
     }    
+
+    @Override
+    public List<Tarefas> findByDataCriacao(@RequestBody Calendar dataCriacao) {
+         return serviceTarefas.findByDataCriacao(dataCriacao);
+    }
+
+    @Override
+    public List<Tarefas> findByDataVencimento(@RequestBody Calendar dataVencimento) {
+         return serviceTarefas.findByDataVencimento(dataVencimento);
+    }
+
+    @Override
+    public List<Tarefas> findByStatus(@RequestBody String status) {
+         return serviceTarefas.findByStatus(status);
+    }
 }

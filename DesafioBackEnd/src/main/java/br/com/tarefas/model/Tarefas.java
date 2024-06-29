@@ -32,6 +32,6 @@ public class Tarefas extends PersistenceEntity implements Serializable {
     private String descricao;
     private Calendar dataCriacao; 
     private Calendar dataVencimento;
-    private boolean status;
+    private String status;
     
 }

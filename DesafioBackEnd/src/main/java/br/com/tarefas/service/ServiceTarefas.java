@@ -6,6 +6,7 @@ package br.com.tarefas.service;
 import br.com.infrastructure.exception.BusinessException;
 import br.com.tarefas.dao.IDaoTarefas;
 import br.com.tarefas.model.Tarefas;
+import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,8 @@ public class ServiceTarefas implements IServiceTarefas {
         } else if(daoTarefas.existsById(tarefas.getId()) == true){
             throw new BusinessException(TAREFAS_EXISTE);   
         } else{
+            tarefas.setStatus("pendente");
+            tarefas.setDataCriacao(Calendar.getInstance());
             return daoTarefas.save(tarefas);
         }
     }
@@ -67,10 +70,6 @@ public class ServiceTarefas implements IServiceTarefas {
         }    
     }
 
-    @Override
-    public List<Tarefas> findByTituloTarefasLike(String titulo) {
-        return daoTarefas.findByNomeLike(titulo);
-    }
 
     @Override
     public List<Tarefas> findByTituloTarefas(String titulo) {
@@ -79,7 +78,7 @@ public class ServiceTarefas implements IServiceTarefas {
         } if(titulo.isEmpty()) {
             throw new BusinessException(TITULO_VAZIO);
         } else{
-            return daoTarefas.findByNome(titulo);
+            return daoTarefas.findByTituloTarefas(titulo);
         }    }
 
     @Override
@@ -91,4 +90,20 @@ public class ServiceTarefas implements IServiceTarefas {
     public Tarefas findById(Long id) {
         return daoTarefas.getReferenceById(id);
     }
+
+    @Override
+    public List<Tarefas> findByDataCriacao(Calendar dataCriacao) {
+        return daoTarefas.findByDataCriacao(dataCriacao);
+    }
+
+    @Override
+    public List<Tarefas> findByDataVencimento(Calendar dataVencimento) {
+        return daoTarefas.findByDataVencimento(dataVencimento);
+    }
+
+    @Override
+    public List <Tarefas> findByStatus(String status) {
+        return daoTarefas.findByStatus(status);
+    }
+
 }

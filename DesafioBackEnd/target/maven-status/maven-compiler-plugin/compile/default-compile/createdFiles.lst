@@ -1,0 +1,10 @@
+br\com\application\Application.class
+br\com\infrastructure\exception\BusinessException.class
+br\com\infrastructure\service\IFacade.class
+br\com\tarefas\service\IServiceTarefas.class
+br\com\tarefas\dao\IDaoTarefas.class
+br\com\infrastructure\support\StringUtil.class
+br\com\infrastructure\model\PersistenceEntity.class
+br\com\tarefas\service\ServiceTarefas.class
+br\com\infrastructure\service\Facade.class
+br\com\tarefas\model\Tarefas.class
